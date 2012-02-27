@@ -1,0 +1,7 @@
+_ReSharper*
+bin
+obj
+*.suo
+*.dotCover
+.DS_STore
+Thumbs.db
