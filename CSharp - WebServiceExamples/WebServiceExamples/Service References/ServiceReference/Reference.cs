@@ -17,11 +17,11 @@ namespace WebServiceExamples.ServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="urn:thesecretserver.com/Authenticate", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        WebServiceExamples.ServiceReference.AuthenticateResult Authenticate(string username, string password, string organization, string domain, string deviceType, string uniqueDeviceId);
+        WebServiceExamples.ServiceReference.AuthenticateResult Authenticate(string username, string password, string organization, string domain);
         
         [System.ServiceModel.OperationContractAttribute(Action="urn:thesecretserver.com/AuthenticateRADIUS", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        WebServiceExamples.ServiceReference.AuthenticateResult AuthenticateRADIUS(string username, string password, string organization, string domain, string radiusPassword, string deviceType, string uniqueId);
+        WebServiceExamples.ServiceReference.AuthenticateResult AuthenticateRADIUS(string username, string password, string organization, string domain, string radiusPassword);
         
         [System.ServiceModel.OperationContractAttribute(Action="urn:thesecretserver.com/GetTokenIsValid", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -30,6 +30,10 @@ namespace WebServiceExamples.ServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="urn:thesecretserver.com/GetSecret", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         WebServiceExamples.ServiceReference.GetSecretResult GetSecret(string token, int secretId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="urn:thesecretserver.com/GetCheckOutStatus", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        WebServiceExamples.ServiceReference.GetCheckOutStatusResult GetCheckOutStatus(string token, int secretId);
         
         [System.ServiceModel.OperationContractAttribute(Action="urn:thesecretserver.com/ChangePassword", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -116,6 +120,23 @@ namespace WebServiceExamples.ServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="urn:thesecretserver.com/UploadFileAttachmentByItemId", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         WebServiceExamples.ServiceReference.UploadFileAttachmentByItemIdResponse UploadFileAttachmentByItemId(WebServiceExamples.ServiceReference.UploadFileAttachmentByItemIdRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="urn:thesecretserver.com/ExpireSecret", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        WebServiceExamples.ServiceReference.WebServiceResult ExpireSecret(string token, int secretId);
+        
+        // CODEGEN: Parameter 'checkOutInterval' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="urn:thesecretserver.com/SetCheckOutEnabled", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        WebServiceExamples.ServiceReference.SetCheckOutEnabledResponse SetCheckOutEnabled(WebServiceExamples.ServiceReference.SetCheckOutEnabledRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="urn:thesecretserver.com/ImportXML", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        WebServiceExamples.ServiceReference.WebServiceResult ImportXML(string token, string xml);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="urn:thesecretserver.com/GetSecretAudit", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        WebServiceExamples.ServiceReference.GetSecretAuditResult GetSecretAudit(string token, int secretId);
     }
     
     /// <remarks/>
@@ -151,6 +172,224 @@ namespace WebServiceExamples.ServiceReference {
             set {
                 this.tokenField = value;
                 this.RaisePropertyChanged("Token");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.233")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:thesecretserver.com")]
+    public partial class AuditSecret : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private int auditSecretIdField;
+        
+        private int secretIdField;
+        
+        private System.DateTime dateRecordedField;
+        
+        private string actionField;
+        
+        private string notesField;
+        
+        private int userIdField;
+        
+        private string secretNameField;
+        
+        private string ipAddressField;
+        
+        private int referenceIdField;
+        
+        private string byUserDisplayNameField;
+        
+        private string ticketNumberField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int AuditSecretId {
+            get {
+                return this.auditSecretIdField;
+            }
+            set {
+                this.auditSecretIdField = value;
+                this.RaisePropertyChanged("AuditSecretId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int SecretId {
+            get {
+                return this.secretIdField;
+            }
+            set {
+                this.secretIdField = value;
+                this.RaisePropertyChanged("SecretId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public System.DateTime DateRecorded {
+            get {
+                return this.dateRecordedField;
+            }
+            set {
+                this.dateRecordedField = value;
+                this.RaisePropertyChanged("DateRecorded");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string Action {
+            get {
+                return this.actionField;
+            }
+            set {
+                this.actionField = value;
+                this.RaisePropertyChanged("Action");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string Notes {
+            get {
+                return this.notesField;
+            }
+            set {
+                this.notesField = value;
+                this.RaisePropertyChanged("Notes");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public int UserId {
+            get {
+                return this.userIdField;
+            }
+            set {
+                this.userIdField = value;
+                this.RaisePropertyChanged("UserId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public string SecretName {
+            get {
+                return this.secretNameField;
+            }
+            set {
+                this.secretNameField = value;
+                this.RaisePropertyChanged("SecretName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public string IpAddress {
+            get {
+                return this.ipAddressField;
+            }
+            set {
+                this.ipAddressField = value;
+                this.RaisePropertyChanged("IpAddress");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public int ReferenceId {
+            get {
+                return this.referenceIdField;
+            }
+            set {
+                this.referenceIdField = value;
+                this.RaisePropertyChanged("ReferenceId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public string ByUserDisplayName {
+            get {
+                return this.byUserDisplayNameField;
+            }
+            set {
+                this.byUserDisplayNameField = value;
+                this.RaisePropertyChanged("ByUserDisplayName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        public string TicketNumber {
+            get {
+                return this.ticketNumberField;
+            }
+            set {
+                this.ticketNumberField = value;
+                this.RaisePropertyChanged("TicketNumber");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.233")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:thesecretserver.com")]
+    public partial class GetSecretAuditResult : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string[] errorsField;
+        
+        private AuditSecret[] secretAuditsField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
+        public string[] Errors {
+            get {
+                return this.errorsField;
+            }
+            set {
+                this.errorsField = value;
+                this.RaisePropertyChanged("Errors");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=1)]
+        public AuditSecret[] SecretAudits {
+            get {
+                return this.secretAuditsField;
+            }
+            set {
+                this.secretAuditsField = value;
+                this.RaisePropertyChanged("SecretAudits");
             }
         }
         
@@ -1428,6 +1667,108 @@ namespace WebServiceExamples.ServiceReference {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:thesecretserver.com")]
+    public partial class GetCheckOutStatusResult : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string[] errorsField;
+        
+        private Secret secretField;
+        
+        private int checkOutMinutesRemainingField;
+        
+        private bool isCheckedOutField;
+        
+        private string checkOutUserDisplayNameField;
+        
+        private int checkOutUserIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
+        public string[] Errors {
+            get {
+                return this.errorsField;
+            }
+            set {
+                this.errorsField = value;
+                this.RaisePropertyChanged("Errors");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public Secret Secret {
+            get {
+                return this.secretField;
+            }
+            set {
+                this.secretField = value;
+                this.RaisePropertyChanged("Secret");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int CheckOutMinutesRemaining {
+            get {
+                return this.checkOutMinutesRemainingField;
+            }
+            set {
+                this.checkOutMinutesRemainingField = value;
+                this.RaisePropertyChanged("CheckOutMinutesRemaining");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public bool IsCheckedOut {
+            get {
+                return this.isCheckedOutField;
+            }
+            set {
+                this.isCheckedOutField = value;
+                this.RaisePropertyChanged("IsCheckedOut");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string CheckOutUserDisplayName {
+            get {
+                return this.checkOutUserDisplayNameField;
+            }
+            set {
+                this.checkOutUserDisplayNameField = value;
+                this.RaisePropertyChanged("CheckOutUserDisplayName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public int CheckOutUserId {
+            get {
+                return this.checkOutUserIdField;
+            }
+            set {
+                this.checkOutUserIdField = value;
+                this.RaisePropertyChanged("CheckOutUserId");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.233")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:thesecretserver.com")]
     public partial class GetSecretResult : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string[] errorsField;
@@ -1612,6 +1953,57 @@ namespace WebServiceExamples.ServiceReference {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="SetCheckOutEnabled", WrapperNamespace="urn:thesecretserver.com", IsWrapped=true)]
+    public partial class SetCheckOutEnabledRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="urn:thesecretserver.com", Order=0)]
+        public string token;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="urn:thesecretserver.com", Order=1)]
+        public int secretId;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="urn:thesecretserver.com", Order=2)]
+        public bool setCheckOut;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="urn:thesecretserver.com", Order=3)]
+        public bool setPasswordChangeOnCheckIn;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="urn:thesecretserver.com", Order=4)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> checkOutInterval;
+        
+        public SetCheckOutEnabledRequest() {
+        }
+        
+        public SetCheckOutEnabledRequest(string token, int secretId, bool setCheckOut, bool setPasswordChangeOnCheckIn, System.Nullable<int> checkOutInterval) {
+            this.token = token;
+            this.secretId = secretId;
+            this.setCheckOut = setCheckOut;
+            this.setPasswordChangeOnCheckIn = setPasswordChangeOnCheckIn;
+            this.checkOutInterval = checkOutInterval;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="SetCheckOutEnabledResponse", WrapperNamespace="urn:thesecretserver.com", IsWrapped=true)]
+    public partial class SetCheckOutEnabledResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="urn:thesecretserver.com", Order=0)]
+        public WebServiceExamples.ServiceReference.WebServiceResult SetCheckOutEnabledResult;
+        
+        public SetCheckOutEnabledResponse() {
+        }
+        
+        public SetCheckOutEnabledResponse(WebServiceExamples.ServiceReference.WebServiceResult SetCheckOutEnabledResult) {
+            this.SetCheckOutEnabledResult = SetCheckOutEnabledResult;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface SSWebServiceSoapChannel : WebServiceExamples.ServiceReference.SSWebServiceSoap, System.ServiceModel.IClientChannel {
     }
@@ -1639,12 +2031,12 @@ namespace WebServiceExamples.ServiceReference {
                 base(binding, remoteAddress) {
         }
         
-        public WebServiceExamples.ServiceReference.AuthenticateResult Authenticate(string username, string password, string organization, string domain, string deviceType, string uniqueDeviceId) {
-            return base.Channel.Authenticate(username, password, organization, domain, deviceType, uniqueDeviceId);
+        public WebServiceExamples.ServiceReference.AuthenticateResult Authenticate(string username, string password, string organization, string domain) {
+            return base.Channel.Authenticate(username, password, organization, domain);
         }
         
-        public WebServiceExamples.ServiceReference.AuthenticateResult AuthenticateRADIUS(string username, string password, string organization, string domain, string radiusPassword, string deviceType, string uniqueId) {
-            return base.Channel.AuthenticateRADIUS(username, password, organization, domain, radiusPassword, deviceType, uniqueId);
+        public WebServiceExamples.ServiceReference.AuthenticateResult AuthenticateRADIUS(string username, string password, string organization, string domain, string radiusPassword) {
+            return base.Channel.AuthenticateRADIUS(username, password, organization, domain, radiusPassword);
         }
         
         public WebServiceExamples.ServiceReference.TokenIsValidResult GetTokenIsValid(string token) {
@@ -1653,6 +2045,10 @@ namespace WebServiceExamples.ServiceReference {
         
         public WebServiceExamples.ServiceReference.GetSecretResult GetSecret(string token, int secretId) {
             return base.Channel.GetSecret(token, secretId);
+        }
+        
+        public WebServiceExamples.ServiceReference.GetCheckOutStatusResult GetCheckOutStatus(string token, int secretId) {
+            return base.Channel.GetCheckOutStatus(token, secretId);
         }
         
         public WebServiceExamples.ServiceReference.WebServiceResult ChangePassword(string token, string currentPassword, string newPassword) {
@@ -1760,6 +2156,34 @@ namespace WebServiceExamples.ServiceReference {
             inValue.fileName = fileName;
             WebServiceExamples.ServiceReference.UploadFileAttachmentByItemIdResponse retVal = ((WebServiceExamples.ServiceReference.SSWebServiceSoap)(this)).UploadFileAttachmentByItemId(inValue);
             return retVal.UploadFileAttachmentByItemIdResult;
+        }
+        
+        public WebServiceExamples.ServiceReference.WebServiceResult ExpireSecret(string token, int secretId) {
+            return base.Channel.ExpireSecret(token, secretId);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        WebServiceExamples.ServiceReference.SetCheckOutEnabledResponse WebServiceExamples.ServiceReference.SSWebServiceSoap.SetCheckOutEnabled(WebServiceExamples.ServiceReference.SetCheckOutEnabledRequest request) {
+            return base.Channel.SetCheckOutEnabled(request);
+        }
+        
+        public WebServiceExamples.ServiceReference.WebServiceResult SetCheckOutEnabled(string token, int secretId, bool setCheckOut, bool setPasswordChangeOnCheckIn, System.Nullable<int> checkOutInterval) {
+            WebServiceExamples.ServiceReference.SetCheckOutEnabledRequest inValue = new WebServiceExamples.ServiceReference.SetCheckOutEnabledRequest();
+            inValue.token = token;
+            inValue.secretId = secretId;
+            inValue.setCheckOut = setCheckOut;
+            inValue.setPasswordChangeOnCheckIn = setPasswordChangeOnCheckIn;
+            inValue.checkOutInterval = checkOutInterval;
+            WebServiceExamples.ServiceReference.SetCheckOutEnabledResponse retVal = ((WebServiceExamples.ServiceReference.SSWebServiceSoap)(this)).SetCheckOutEnabled(inValue);
+            return retVal.SetCheckOutEnabledResult;
+        }
+        
+        public WebServiceExamples.ServiceReference.WebServiceResult ImportXML(string token, string xml) {
+            return base.Channel.ImportXML(token, xml);
+        }
+        
+        public WebServiceExamples.ServiceReference.GetSecretAuditResult GetSecretAudit(string token, int secretId) {
+            return base.Channel.GetSecretAudit(token, secretId);
         }
     }
 }

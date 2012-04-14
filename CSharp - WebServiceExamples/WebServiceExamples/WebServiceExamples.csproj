@@ -71,6 +71,9 @@
     <None Include="Service References\ServiceReference\WebServiceExamples.ServiceReference.GeneratePasswordResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ServiceReference\WebServiceExamples.ServiceReference.GetCheckOutStatusResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ServiceReference\WebServiceExamples.ServiceReference.GetFavoritesResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -78,6 +81,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ServiceReference\WebServiceExamples.ServiceReference.GetFoldersResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServiceReference\WebServiceExamples.ServiceReference.GetSecretAuditResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ServiceReference\WebServiceExamples.ServiceReference.GetSecretResult.datasource">

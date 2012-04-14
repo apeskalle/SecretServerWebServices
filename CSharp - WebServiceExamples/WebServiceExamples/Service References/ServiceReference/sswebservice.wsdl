@@ -10,8 +10,6 @@
             <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="organization" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="domain" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="deviceType" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="uniqueDeviceId" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -41,8 +39,6 @@
             <s:element minOccurs="0" maxOccurs="1" name="organization" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="domain" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="radiusPassword" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="deviceType" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="uniqueId" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -119,6 +115,31 @@
           <s:element minOccurs="1" maxOccurs="1" name="IsNotes" type="s:boolean" />
           <s:element minOccurs="1" maxOccurs="1" name="IsPassword" type="s:boolean" />
           <s:element minOccurs="0" maxOccurs="1" name="FieldDisplayName" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetCheckOutStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="secretId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCheckOutStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCheckOutStatusResult" type="tns:GetCheckOutStatusResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GetCheckOutStatusResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Errors" type="tns:ArrayOfString" />
+          <s:element minOccurs="0" maxOccurs="1" name="Secret" type="tns:Secret" />
+          <s:element minOccurs="1" maxOccurs="1" name="CheckOutMinutesRemaining" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsCheckedOut" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="CheckOutUserDisplayName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CheckOutUserId" type="s:int" />
         </s:sequence>
       </s:complexType>
       <s:element name="ChangePassword">
@@ -607,9 +628,99 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="ExpireSecret">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="secretId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExpireSecretResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ExpireSecretResult" type="tns:WebServiceResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetCheckOutEnabled">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="secretId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="setCheckOut" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="setPasswordChangeOnCheckIn" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="checkOutInterval" nillable="true" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetCheckOutEnabledResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SetCheckOutEnabledResult" type="tns:WebServiceResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ImportXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ImportXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ImportXMLResult" type="tns:WebServiceResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSecretAudit">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="secretId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSecretAuditResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSecretAuditResult" type="tns:GetSecretAuditResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GetSecretAuditResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Errors" type="tns:ArrayOfString" />
+          <s:element minOccurs="0" maxOccurs="1" name="SecretAudits" type="tns:ArrayOfAuditSecret" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfAuditSecret">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="AuditSecret" nillable="true" type="tns:AuditSecret" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="AuditSecret">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="AuditSecretId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SecretId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="DateRecorded" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Action" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Notes" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="SecretName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="IpAddress" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ReferenceId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ByUserDisplayName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TicketNumber" type="s:string" />
+        </s:sequence>
+      </s:complexType>
       <s:element name="AuthenticateResult" nillable="true" type="tns:AuthenticateResult" />
       <s:element name="TokenIsValidResult" nillable="true" type="tns:TokenIsValidResult" />
       <s:element name="GetSecretResult" nillable="true" type="tns:GetSecretResult" />
+      <s:element name="GetCheckOutStatusResult" nillable="true" type="tns:GetCheckOutStatusResult" />
       <s:element name="WebServiceResult" nillable="true" type="tns:WebServiceResult" />
       <s:element name="GetWebPasswordResult" nillable="true" type="tns:GetWebPasswordResult" />
       <s:element name="SearchSecretsResult" nillable="true" type="tns:SearchSecretsResult" />
@@ -624,6 +735,7 @@
       <s:element name="CreateFolderResult" nillable="true" type="tns:CreateFolderResult" />
       <s:element name="SearchFolderResult" nillable="true" type="tns:SearchFolderResult" />
       <s:element name="FileDownloadResult" nillable="true" type="tns:FileDownloadResult" />
+      <s:element name="GetSecretAuditResult" nillable="true" type="tns:GetSecretAuditResult" />
     </s:schema>
     <s:schema targetNamespace="urn:thesecretserver.com/AbstractTypes">
       <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
@@ -661,6 +773,12 @@
   </wsdl:message>
   <wsdl:message name="GetSecretSoapOut">
     <wsdl:part name="parameters" element="tns:GetSecretResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCheckOutStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCheckOutStatus" />
+  </wsdl:message>
+  <wsdl:message name="GetCheckOutStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCheckOutStatusResponse" />
   </wsdl:message>
   <wsdl:message name="ChangePasswordSoapIn">
     <wsdl:part name="parameters" element="tns:ChangePassword" />
@@ -788,13 +906,35 @@
   <wsdl:message name="UploadFileAttachmentByItemIdSoapOut">
     <wsdl:part name="parameters" element="tns:UploadFileAttachmentByItemIdResponse" />
   </wsdl:message>
+  <wsdl:message name="ExpireSecretSoapIn">
+    <wsdl:part name="parameters" element="tns:ExpireSecret" />
+  </wsdl:message>
+  <wsdl:message name="ExpireSecretSoapOut">
+    <wsdl:part name="parameters" element="tns:ExpireSecretResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetCheckOutEnabledSoapIn">
+    <wsdl:part name="parameters" element="tns:SetCheckOutEnabled" />
+  </wsdl:message>
+  <wsdl:message name="SetCheckOutEnabledSoapOut">
+    <wsdl:part name="parameters" element="tns:SetCheckOutEnabledResponse" />
+  </wsdl:message>
+  <wsdl:message name="ImportXMLSoapIn">
+    <wsdl:part name="parameters" element="tns:ImportXML" />
+  </wsdl:message>
+  <wsdl:message name="ImportXMLSoapOut">
+    <wsdl:part name="parameters" element="tns:ImportXMLResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSecretAuditSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSecretAudit" />
+  </wsdl:message>
+  <wsdl:message name="GetSecretAuditSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSecretAuditResponse" />
+  </wsdl:message>
   <wsdl:message name="AuthenticateHttpGetIn">
     <wsdl:part name="username" type="s:string" />
     <wsdl:part name="password" type="s:string" />
     <wsdl:part name="organization" type="s:string" />
     <wsdl:part name="domain" type="s:string" />
-    <wsdl:part name="deviceType" type="s:string" />
-    <wsdl:part name="uniqueDeviceId" type="s:string" />
   </wsdl:message>
   <wsdl:message name="AuthenticateHttpGetOut">
     <wsdl:part name="Body" element="tns:AuthenticateResult" />
@@ -805,8 +945,6 @@
     <wsdl:part name="organization" type="s:string" />
     <wsdl:part name="domain" type="s:string" />
     <wsdl:part name="radiusPassword" type="s:string" />
-    <wsdl:part name="deviceType" type="s:string" />
-    <wsdl:part name="uniqueId" type="s:string" />
   </wsdl:message>
   <wsdl:message name="AuthenticateRADIUSHttpGetOut">
     <wsdl:part name="Body" element="tns:AuthenticateResult" />
@@ -823,6 +961,13 @@
   </wsdl:message>
   <wsdl:message name="GetSecretHttpGetOut">
     <wsdl:part name="Body" element="tns:GetSecretResult" />
+  </wsdl:message>
+  <wsdl:message name="GetCheckOutStatusHttpGetIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="secretId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCheckOutStatusHttpGetOut">
+    <wsdl:part name="Body" element="tns:GetCheckOutStatusResult" />
   </wsdl:message>
   <wsdl:message name="ChangePasswordHttpGetIn">
     <wsdl:part name="token" type="s:string" />
@@ -966,13 +1111,32 @@
   <wsdl:message name="UploadFileAttachmentByItemIdHttpGetOut">
     <wsdl:part name="Body" element="tns:WebServiceResult" />
   </wsdl:message>
+  <wsdl:message name="ExpireSecretHttpGetIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="secretId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ExpireSecretHttpGetOut">
+    <wsdl:part name="Body" element="tns:WebServiceResult" />
+  </wsdl:message>
+  <wsdl:message name="ImportXMLHttpGetIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="xml" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ImportXMLHttpGetOut">
+    <wsdl:part name="Body" element="tns:WebServiceResult" />
+  </wsdl:message>
+  <wsdl:message name="GetSecretAuditHttpGetIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="secretId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetSecretAuditHttpGetOut">
+    <wsdl:part name="Body" element="tns:GetSecretAuditResult" />
+  </wsdl:message>
   <wsdl:message name="AuthenticateHttpPostIn">
     <wsdl:part name="username" type="s:string" />
     <wsdl:part name="password" type="s:string" />
     <wsdl:part name="organization" type="s:string" />
     <wsdl:part name="domain" type="s:string" />
-    <wsdl:part name="deviceType" type="s:string" />
-    <wsdl:part name="uniqueDeviceId" type="s:string" />
   </wsdl:message>
   <wsdl:message name="AuthenticateHttpPostOut">
     <wsdl:part name="Body" element="tns:AuthenticateResult" />
@@ -983,8 +1147,6 @@
     <wsdl:part name="organization" type="s:string" />
     <wsdl:part name="domain" type="s:string" />
     <wsdl:part name="radiusPassword" type="s:string" />
-    <wsdl:part name="deviceType" type="s:string" />
-    <wsdl:part name="uniqueId" type="s:string" />
   </wsdl:message>
   <wsdl:message name="AuthenticateRADIUSHttpPostOut">
     <wsdl:part name="Body" element="tns:AuthenticateResult" />
@@ -1001,6 +1163,13 @@
   </wsdl:message>
   <wsdl:message name="GetSecretHttpPostOut">
     <wsdl:part name="Body" element="tns:GetSecretResult" />
+  </wsdl:message>
+  <wsdl:message name="GetCheckOutStatusHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="secretId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCheckOutStatusHttpPostOut">
+    <wsdl:part name="Body" element="tns:GetCheckOutStatusResult" />
   </wsdl:message>
   <wsdl:message name="ChangePasswordHttpPostIn">
     <wsdl:part name="token" type="s:string" />
@@ -1144,6 +1313,27 @@
   <wsdl:message name="UploadFileAttachmentByItemIdHttpPostOut">
     <wsdl:part name="Body" element="tns:WebServiceResult" />
   </wsdl:message>
+  <wsdl:message name="ExpireSecretHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="secretId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ExpireSecretHttpPostOut">
+    <wsdl:part name="Body" element="tns:WebServiceResult" />
+  </wsdl:message>
+  <wsdl:message name="ImportXMLHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="xml" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ImportXMLHttpPostOut">
+    <wsdl:part name="Body" element="tns:WebServiceResult" />
+  </wsdl:message>
+  <wsdl:message name="GetSecretAuditHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="secretId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetSecretAuditHttpPostOut">
+    <wsdl:part name="Body" element="tns:GetSecretAuditResult" />
+  </wsdl:message>
   <wsdl:portType name="SSWebServiceSoap">
     <wsdl:operation name="Authenticate">
       <wsdl:input message="tns:AuthenticateSoapIn" />
@@ -1160,6 +1350,10 @@
     <wsdl:operation name="GetSecret">
       <wsdl:input message="tns:GetSecretSoapIn" />
       <wsdl:output message="tns:GetSecretSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCheckOutStatus">
+      <wsdl:input message="tns:GetCheckOutStatusSoapIn" />
+      <wsdl:output message="tns:GetCheckOutStatusSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="ChangePassword">
       <wsdl:input message="tns:ChangePasswordSoapIn" />
@@ -1245,6 +1439,22 @@
       <wsdl:input message="tns:UploadFileAttachmentByItemIdSoapIn" />
       <wsdl:output message="tns:UploadFileAttachmentByItemIdSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="ExpireSecret">
+      <wsdl:input message="tns:ExpireSecretSoapIn" />
+      <wsdl:output message="tns:ExpireSecretSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetCheckOutEnabled">
+      <wsdl:input message="tns:SetCheckOutEnabledSoapIn" />
+      <wsdl:output message="tns:SetCheckOutEnabledSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportXML">
+      <wsdl:input message="tns:ImportXMLSoapIn" />
+      <wsdl:output message="tns:ImportXMLSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSecretAudit">
+      <wsdl:input message="tns:GetSecretAuditSoapIn" />
+      <wsdl:output message="tns:GetSecretAuditSoapOut" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="SSWebServiceHttpGet">
     <wsdl:operation name="Authenticate">
@@ -1262,6 +1472,10 @@
     <wsdl:operation name="GetSecret">
       <wsdl:input message="tns:GetSecretHttpGetIn" />
       <wsdl:output message="tns:GetSecretHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCheckOutStatus">
+      <wsdl:input message="tns:GetCheckOutStatusHttpGetIn" />
+      <wsdl:output message="tns:GetCheckOutStatusHttpGetOut" />
     </wsdl:operation>
     <wsdl:operation name="ChangePassword">
       <wsdl:input message="tns:ChangePasswordHttpGetIn" />
@@ -1339,6 +1553,18 @@
       <wsdl:input message="tns:UploadFileAttachmentByItemIdHttpGetIn" />
       <wsdl:output message="tns:UploadFileAttachmentByItemIdHttpGetOut" />
     </wsdl:operation>
+    <wsdl:operation name="ExpireSecret">
+      <wsdl:input message="tns:ExpireSecretHttpGetIn" />
+      <wsdl:output message="tns:ExpireSecretHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportXML">
+      <wsdl:input message="tns:ImportXMLHttpGetIn" />
+      <wsdl:output message="tns:ImportXMLHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSecretAudit">
+      <wsdl:input message="tns:GetSecretAuditHttpGetIn" />
+      <wsdl:output message="tns:GetSecretAuditHttpGetOut" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="SSWebServiceHttpPost">
     <wsdl:operation name="Authenticate">
@@ -1356,6 +1582,10 @@
     <wsdl:operation name="GetSecret">
       <wsdl:input message="tns:GetSecretHttpPostIn" />
       <wsdl:output message="tns:GetSecretHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCheckOutStatus">
+      <wsdl:input message="tns:GetCheckOutStatusHttpPostIn" />
+      <wsdl:output message="tns:GetCheckOutStatusHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="ChangePassword">
       <wsdl:input message="tns:ChangePasswordHttpPostIn" />
@@ -1433,6 +1663,18 @@
       <wsdl:input message="tns:UploadFileAttachmentByItemIdHttpPostIn" />
       <wsdl:output message="tns:UploadFileAttachmentByItemIdHttpPostOut" />
     </wsdl:operation>
+    <wsdl:operation name="ExpireSecret">
+      <wsdl:input message="tns:ExpireSecretHttpPostIn" />
+      <wsdl:output message="tns:ExpireSecretHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportXML">
+      <wsdl:input message="tns:ImportXMLHttpPostIn" />
+      <wsdl:output message="tns:ImportXMLHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSecretAudit">
+      <wsdl:input message="tns:GetSecretAuditHttpPostIn" />
+      <wsdl:output message="tns:GetSecretAuditHttpPostOut" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="SSWebServiceSoap" type="tns:SSWebServiceSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -1465,6 +1707,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetSecret">
       <soap:operation soapAction="urn:thesecretserver.com/GetSecret" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCheckOutStatus">
+      <soap:operation soapAction="urn:thesecretserver.com/GetCheckOutStatus" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1661,6 +1912,42 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="ExpireSecret">
+      <soap:operation soapAction="urn:thesecretserver.com/ExpireSecret" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCheckOutEnabled">
+      <soap:operation soapAction="urn:thesecretserver.com/SetCheckOutEnabled" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportXML">
+      <soap:operation soapAction="urn:thesecretserver.com/ImportXML" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSecretAudit">
+      <soap:operation soapAction="urn:thesecretserver.com/GetSecretAudit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="SSWebServiceSoap12" type="tns:SSWebServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -1693,6 +1980,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetSecret">
       <soap12:operation soapAction="urn:thesecretserver.com/GetSecret" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCheckOutStatus">
+      <soap12:operation soapAction="urn:thesecretserver.com/GetCheckOutStatus" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -1889,6 +2185,42 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="ExpireSecret">
+      <soap12:operation soapAction="urn:thesecretserver.com/ExpireSecret" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCheckOutEnabled">
+      <soap12:operation soapAction="urn:thesecretserver.com/SetCheckOutEnabled" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportXML">
+      <soap12:operation soapAction="urn:thesecretserver.com/ImportXML" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSecretAudit">
+      <soap12:operation soapAction="urn:thesecretserver.com/GetSecretAudit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="SSWebServiceHttpGet" type="tns:SSWebServiceHttpGet">
     <http:binding verb="GET" />
@@ -1921,6 +2253,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetSecret">
       <http:operation location="/GetSecret" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCheckOutStatus">
+      <http:operation location="/GetCheckOutStatus" />
       <wsdl:input>
         <http:urlEncoded />
       </wsdl:input>
@@ -2092,6 +2433,33 @@
     </wsdl:operation>
     <wsdl:operation name="UploadFileAttachmentByItemId">
       <http:operation location="/UploadFileAttachmentByItemId" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExpireSecret">
+      <http:operation location="/ExpireSecret" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportXML">
+      <http:operation location="/ImportXML" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSecretAudit">
+      <http:operation location="/GetSecretAudit" />
       <wsdl:input>
         <http:urlEncoded />
       </wsdl:input>
@@ -2138,6 +2506,15 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetCheckOutStatus">
+      <http:operation location="/GetCheckOutStatus" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="ChangePassword">
       <http:operation location="/ChangePassword" />
       <wsdl:input>
@@ -2302,6 +2679,33 @@
     </wsdl:operation>
     <wsdl:operation name="UploadFileAttachmentByItemId">
       <http:operation location="/UploadFileAttachmentByItemId" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExpireSecret">
+      <http:operation location="/ExpireSecret" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportXML">
+      <http:operation location="/ImportXML" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSecretAudit">
+      <http:operation location="/GetSecretAudit" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>
