@@ -135,12 +135,8 @@ namespace SampleWebServiceConsoleApplication
 
 		private static Account ReadAccount()
 		{
-#if DEBUG
-			const string url = "http://localhost/ihawu/webservices/sswebservice.asmx";
-#else
 			Console.Write("Please enter your Secret Server URL: ");
 			var url = Console.ReadLine();
-#endif
 			Console.Write("Please enter your user name: ");
 			var username = Console.ReadLine();
 			Console.Write("Please enter your password: ");
