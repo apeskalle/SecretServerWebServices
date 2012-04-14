@@ -98,6 +98,7 @@ namespace WebServiceExamples
 			else
 			{
 				var token = result.Token;
+				//The ID of the Secret. Obtain the ID through other web service methods.
 				var secretId = 1;
 				var getSecretResult = soapClient.GetSecret(token, secretId);
 				if (getSecretResult.Errors.Length > 0)
