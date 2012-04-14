@@ -121,5 +121,42 @@ namespace WebServiceExamples
 				}
 			}
 		}
+
+		public void SearchSecrets()
+		{
+			//Use a basic HTTP binding for SOAP.
+			var binding = new BasicHttpBinding();
+			//Create an endpoint for the URI.
+			var endpoint = new EndpointAddress("http://yoursecretserver/webservices/sswebservice.asmx");
+			var soapClient = new SSWebServiceSoapClient(binding, endpoint);
+			var result = soapClient.Authenticate("theUserName", "thePassword", string.Empty, string.Empty);
+			if (result.Errors.Length > 0)
+			{
+				//Authentication failed. The Errors array contains the reason(s).				
+			}
+			//Successful
+			else
+			{
+				var token = result.Token;
+				//Search for all secrets that contain "Hello" in them.
+				var searchResult = soapClient.SearchSecrets(token, "Hello");
+				if (searchResult.Errors.Length > 0)
+				{
+					//Failed to get the secret. The Errors array contains the reason(s).
+				}
+				else
+				{
+					foreach (var summary in searchResult.SecretSummaries)
+					{
+						//The Secret's name
+						var secretName = summary.SecretName;
+						//The name of the Template
+						var templateName = summary.SecretTypeName;
+						//The ID of the Secret. Can be used in GetSecret to obtain more information
+						var secretId = summary.SecretId;
+					}
+				}
+			}
+		}
 	}
 }
