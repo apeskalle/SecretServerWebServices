@@ -100,7 +100,7 @@ namespace WebServiceExamples
 				var token = result.Token;
 				//The ID of the Secret. Obtain the ID through other web service methods.
 				var secretId = 1;
-				var getSecretResult = soapClient.GetSecret(token, secretId);
+				var getSecretResult = soapClient.GetSecret(token, secretId, null, null);
 				if (getSecretResult.Errors.Length > 0)
 				{
 					//Failed to get the secret. The Errors array contains the reason(s).
@@ -139,7 +139,7 @@ namespace WebServiceExamples
 			{
 				var token = result.Token;
 				//Search for all secrets that contain "Hello" in them.
-				var searchResult = soapClient.SearchSecrets(token, "Hello");
+				var searchResult = soapClient.SearchSecrets(token, "Hello", null, null);
 				if (searchResult.Errors.Length > 0)
 				{
 					//Failed to get the secret. The Errors array contains the reason(s).

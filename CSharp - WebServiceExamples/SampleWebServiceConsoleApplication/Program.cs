@@ -105,7 +105,7 @@ namespace SampleWebServiceConsoleApplication
 		private static bool DisplayFavorites(Account account, string token)
 		{
 			var soapClient = GetClient(account);
-			var favorites = soapClient.GetFavorites(token);
+			var favorites = soapClient.GetFavorites(token, false);
 			var selection = GenericMenu(favorites.SecretSummaries.ToDictionary(k => k.SecretName));
 			if (selection == null)
 			{
@@ -118,7 +118,7 @@ namespace SampleWebServiceConsoleApplication
 		private static Secret GetSecret(int secretId, Account account, string token)
 		{
 			var soapClient = GetClient(account);
-			return soapClient.GetSecret(token, secretId).Secret;
+			return soapClient.GetSecret(token, secretId, null, null).Secret;
 		}
 
 		private static void DisplaySecret(SecretSummary secretSummary, Account account, string token)
