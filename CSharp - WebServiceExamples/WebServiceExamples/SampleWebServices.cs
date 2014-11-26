@@ -7,6 +7,8 @@ namespace WebServiceExamples
 {
 	public class SampleWebServices
 	{
+	    private string _webserviceURL = "http://yoursecretserver/webservices/sswebservice.asmx";
+
 		/// <summary>
 		/// Demonstrates how to authenticate using web services.
 		/// Assumes that the account is a local account not using Secret Server Online.
@@ -16,7 +18,7 @@ namespace WebServiceExamples
 			//Use a basic HTTP binding for SOAP.
 			var binding = new BasicHttpBinding();
 			//Create an endpoint for the URI.
-			var endpoint = new EndpointAddress("http://yoursecretserver/webservices/sswebservice.asmx");
+			var endpoint = new EndpointAddress(_webserviceURL);
 			var soapClient = new SSWebServiceSoapClient(binding, endpoint);
 			var result = soapClient.Authenticate("theUserName", "thePassword", string.Empty, string.Empty);
 			if (result.Errors.Length > 0)
@@ -40,7 +42,7 @@ namespace WebServiceExamples
 			//Use a basic HTTP binding for SOAP.
 			var binding = new BasicHttpBinding();
 			//Create an endpoint for the URI.
-			var endpoint = new EndpointAddress("http://yoursecretserver/webservices/sswebservice.asmx");
+			var endpoint = new EndpointAddress(_webserviceURL);
 			var soapClient = new SSWebServiceSoapClient(binding, endpoint);
 			var result = soapClient.Authenticate("theUserName", "thePassword", string.Empty, "example");
 			if (result.Errors.Length > 0)
@@ -63,7 +65,7 @@ namespace WebServiceExamples
 			//Use a basic HTTP binding for SOAP.
 			var binding = new BasicHttpBinding();
 			//Create an endpoint for the URI.
-			var endpoint = new EndpointAddress("http://yoursecretserver/webservices/sswebservice.asmx");
+			var endpoint = new EndpointAddress(_webserviceURL);
 			var soapClient = new SSWebServiceSoapClient(binding, endpoint);
 			var authenticateResult = soapClient.Authenticate("theUserName", "thePassword", string.Empty, string.Empty);
 			//Assume authentication was successful.
@@ -87,7 +89,7 @@ namespace WebServiceExamples
 			//Use a basic HTTP binding for SOAP.
 			var binding = new BasicHttpBinding();
 			//Create an endpoint for the URI.
-			var endpoint = new EndpointAddress("http://yoursecretserver/webservices/sswebservice.asmx");
+			var endpoint = new EndpointAddress(_webserviceURL);
 			var soapClient = new SSWebServiceSoapClient(binding, endpoint);
 			var result = soapClient.Authenticate("theUserName", "thePassword", string.Empty, string.Empty);
 			if (result.Errors.Length > 0)
@@ -100,7 +102,7 @@ namespace WebServiceExamples
 				var token = result.Token;
 				//The ID of the Secret. Obtain the ID through other web service methods.
 				var secretId = 1;
-				var getSecretResult = soapClient.GetSecret(token, secretId, null, null);
+				var getSecretResult = soapClient.GetSecretLegacy(token, secretId);
 				if (getSecretResult.Errors.Length > 0)
 				{
 					//Failed to get the secret. The Errors array contains the reason(s).
@@ -127,7 +129,7 @@ namespace WebServiceExamples
 			//Use a basic HTTP binding for SOAP.
 			var binding = new BasicHttpBinding();
 			//Create an endpoint for the URI.
-			var endpoint = new EndpointAddress("http://yoursecretserver/webservices/sswebservice.asmx");
+			var endpoint = new EndpointAddress(_webserviceURL);
 			var soapClient = new SSWebServiceSoapClient(binding, endpoint);
 			var result = soapClient.Authenticate("theUserName", "thePassword", string.Empty, string.Empty);
 			if (result.Errors.Length > 0)
@@ -139,7 +141,7 @@ namespace WebServiceExamples
 			{
 				var token = result.Token;
 				//Search for all secrets that contain "Hello" in them.
-				var searchResult = soapClient.SearchSecrets(token, "Hello", null, null);
+				var searchResult = soapClient.SearchSecretsLegacy(token, "Hello");
 				if (searchResult.Errors.Length > 0)
 				{
 					//Failed to get the secret. The Errors array contains the reason(s).

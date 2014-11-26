@@ -74,7 +74,13 @@
     <None Include="Service References\ServiceReference\WebServiceExamples.ServiceReference.GetAgentsResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ServiceReference\WebServiceExamples.ServiceReference.GetAllGroupsResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ServiceReference\WebServiceExamples.ServiceReference.GetCheckOutStatusResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServiceReference\WebServiceExamples.ServiceReference.GetDependenciesResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ServiceReference\WebServiceExamples.ServiceReference.GetFavoritesResult.datasource">
@@ -101,9 +107,6 @@
     <None Include="Service References\ServiceReference\WebServiceExamples.ServiceReference.GetSecretTemplatesResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\ServiceReference\WebServiceExamples.ServiceReference.GetWebPasswordResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Service References\ServiceReference\WebServiceExamples.ServiceReference.RequestApprovalResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -111,6 +114,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ServiceReference\WebServiceExamples.ServiceReference.SearchSecretsResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServiceReference\WebServiceExamples.ServiceReference.SSHCredentialsResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ServiceReference\WebServiceExamples.ServiceReference.TokenIsValidResult.datasource">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="urn:thesecretserver.com" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s1="urn:thesecretserver.com/AbstractTypes" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="urn:thesecretserver.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="urn:thesecretserver.com" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s1="urn:thesecretserver.com/AbstractTypes" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="urn:thesecretserver.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Webservice for standard integration.</wsdl:documentation>
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="urn:thesecretserver.com">
@@ -320,40 +320,6 @@
       <s:complexType name="WebServiceResult">
         <s:sequence>
           <s:element minOccurs="0" maxOccurs="1" name="Errors" type="tns:ArrayOfString" />
-        </s:sequence>
-      </s:complexType>
-      <s:element name="SearchWebPasswordsForUrl">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="SearchWebPasswordsForUrlResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="SearchWebPasswordsForUrlResult" type="tns:GetWebPasswordResult" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="GetWebPasswordResult">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="Errors" type="tns:ArrayOfString" />
-          <s:element minOccurs="0" maxOccurs="1" name="WebPasswords" type="tns:ArrayOfWebPassword" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="ArrayOfWebPassword">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="WebPassword" nillable="true" type="tns:WebPassword" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="WebPassword">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="SecretName" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Url" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
         </s:sequence>
       </s:complexType>
       <s:element name="GetSecretsByFieldValue">
@@ -1033,6 +999,86 @@
           <s:element minOccurs="0" maxOccurs="1" name="TicketNumber" type="s:string" />
         </s:sequence>
       </s:complexType>
+      <s:element name="AddDependency">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dependency" type="tns:Dependency" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Dependency">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="SecretId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SecretDependencyTypeId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="MachineName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ServiceName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PrivilegedAccountSecretId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Active" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="RestartOnPasswordChange" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="WaitBeforeSeconds" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="AdditionalInfo" type="tns:AdditionalDependencyInfoJson" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PowershellScriptId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SecretDependencyId" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="AdditionalDependencyInfoJson">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Regex" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PowershellArguments" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AddDependencyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddDependencyResult" type="tns:WebServiceResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemoveDependency">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="dependencyId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="secretId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemoveDependencyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RemoveDependencyResult" type="tns:WebServiceResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDependencies">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="secretId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDependenciesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDependenciesResult" type="tns:GetDependenciesResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GetDependenciesResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Dependencies" type="tns:ArrayOfDependency" />
+          <s:element minOccurs="0" maxOccurs="1" name="Errors" type="tns:ArrayOfString" />
+          <s:element minOccurs="1" maxOccurs="1" name="Success" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDependency">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Dependency" nillable="true" type="tns:Dependency" />
+        </s:sequence>
+      </s:complexType>
       <s:element name="GetAgents">
         <s:complexType>
           <s:sequence>
@@ -1175,13 +1221,104 @@
           <s:element minOccurs="0" maxOccurs="1" name="DomainName" type="s:string" />
         </s:sequence>
       </s:complexType>
+      <s:element name="GetAllGroups">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllGroupsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllGroupsResult" type="tns:GetAllGroupsResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GetAllGroupsResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Errors" type="tns:ArrayOfString" />
+          <s:element minOccurs="0" maxOccurs="1" name="Groups" type="tns:ArrayOfGroup" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfGroup">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Group" nillable="true" type="tns:Group" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Group">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DomainId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="DomainName" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AssignUserToGroup">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="groupId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AssignUserToGroupResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AssignUserToGroupResult" type="tns:WebServiceResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSSHLoginCredentials">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="secretId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSSHLoginCredentialsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSSHLoginCredentialsResult" type="tns:SSHCredentialsResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="SSHCredentialsResult">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:WebServiceResult">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Host" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Port" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetSSHLoginCredentialsWithMachine">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="secretId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="machine" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSSHLoginCredentialsWithMachineResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSSHLoginCredentialsWithMachineResult" type="tns:SSHCredentialsResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="RequestApprovalResult" nillable="true" type="tns:RequestApprovalResult" />
       <s:element name="AuthenticateResult" nillable="true" type="tns:AuthenticateResult" />
       <s:element name="TokenIsValidResult" nillable="true" type="tns:TokenIsValidResult" />
       <s:element name="GetSecretResult" nillable="true" type="tns:GetSecretResult" />
       <s:element name="GetCheckOutStatusResult" nillable="true" type="tns:GetCheckOutStatusResult" />
       <s:element name="WebServiceResult" nillable="true" type="tns:WebServiceResult" />
-      <s:element name="GetWebPasswordResult" nillable="true" type="tns:GetWebPasswordResult" />
       <s:element name="GetSecretsByFieldValueResult" nillable="true" type="tns:GetSecretsByFieldValueResult" />
       <s:element name="SearchSecretsResult" nillable="true" type="tns:SearchSecretsResult" />
       <s:element name="GetFavoritesResult" nillable="true" type="tns:GetFavoritesResult" />
@@ -1196,8 +1333,11 @@
       <s:element name="SearchFolderResult" nillable="true" type="tns:SearchFolderResult" />
       <s:element name="FileDownloadResult" nillable="true" type="tns:FileDownloadResult" />
       <s:element name="GetSecretAuditResult" nillable="true" type="tns:GetSecretAuditResult" />
+      <s:element name="GetDependenciesResult" nillable="true" type="tns:GetDependenciesResult" />
       <s:element name="GetAgentsResult" nillable="true" type="tns:GetAgentsResult" />
       <s:element name="UserInfoResult" nillable="true" type="tns:UserInfoResult" />
+      <s:element name="GetAllGroupsResult" nillable="true" type="tns:GetAllGroupsResult" />
+      <s:element name="SSHCredentialsResult" nillable="true" type="tns:SSHCredentialsResult" />
     </s:schema>
     <s:schema targetNamespace="urn:thesecretserver.com/AbstractTypes">
       <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
@@ -1265,12 +1405,6 @@
   </wsdl:message>
   <wsdl:message name="ChangePasswordSoapOut">
     <wsdl:part name="parameters" element="tns:ChangePasswordResponse" />
-  </wsdl:message>
-  <wsdl:message name="SearchWebPasswordsForUrlSoapIn">
-    <wsdl:part name="parameters" element="tns:SearchWebPasswordsForUrl" />
-  </wsdl:message>
-  <wsdl:message name="SearchWebPasswordsForUrlSoapOut">
-    <wsdl:part name="parameters" element="tns:SearchWebPasswordsForUrlResponse" />
   </wsdl:message>
   <wsdl:message name="GetSecretsByFieldValueSoapIn">
     <wsdl:part name="parameters" element="tns:GetSecretsByFieldValue" />
@@ -1458,6 +1592,24 @@
   <wsdl:message name="GetSecretAuditSoapOut">
     <wsdl:part name="parameters" element="tns:GetSecretAuditResponse" />
   </wsdl:message>
+  <wsdl:message name="AddDependencySoapIn">
+    <wsdl:part name="parameters" element="tns:AddDependency" />
+  </wsdl:message>
+  <wsdl:message name="AddDependencySoapOut">
+    <wsdl:part name="parameters" element="tns:AddDependencyResponse" />
+  </wsdl:message>
+  <wsdl:message name="RemoveDependencySoapIn">
+    <wsdl:part name="parameters" element="tns:RemoveDependency" />
+  </wsdl:message>
+  <wsdl:message name="RemoveDependencySoapOut">
+    <wsdl:part name="parameters" element="tns:RemoveDependencyResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDependenciesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDependencies" />
+  </wsdl:message>
+  <wsdl:message name="GetDependenciesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDependenciesResponse" />
+  </wsdl:message>
   <wsdl:message name="GetAgentsSoapIn">
     <wsdl:part name="parameters" element="tns:GetAgents" />
   </wsdl:message>
@@ -1499,6 +1651,30 @@
   </wsdl:message>
   <wsdl:message name="WhoAmISoapOut">
     <wsdl:part name="parameters" element="tns:WhoAmIResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllGroupsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllGroups" />
+  </wsdl:message>
+  <wsdl:message name="GetAllGroupsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllGroupsResponse" />
+  </wsdl:message>
+  <wsdl:message name="AssignUserToGroupSoapIn">
+    <wsdl:part name="parameters" element="tns:AssignUserToGroup" />
+  </wsdl:message>
+  <wsdl:message name="AssignUserToGroupSoapOut">
+    <wsdl:part name="parameters" element="tns:AssignUserToGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSSHLoginCredentialsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSSHLoginCredentials" />
+  </wsdl:message>
+  <wsdl:message name="GetSSHLoginCredentialsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSSHLoginCredentialsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSSHLoginCredentialsWithMachineSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSSHLoginCredentialsWithMachine" />
+  </wsdl:message>
+  <wsdl:message name="GetSSHLoginCredentialsWithMachineSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSSHLoginCredentialsWithMachineResponse" />
   </wsdl:message>
   <wsdl:message name="ApproveSecretAccessRequestHttpGetIn">
     <wsdl:part name="approvalId" type="s:string" />
@@ -1561,13 +1737,6 @@
   </wsdl:message>
   <wsdl:message name="ChangePasswordHttpGetOut">
     <wsdl:part name="Body" element="tns:WebServiceResult" />
-  </wsdl:message>
-  <wsdl:message name="SearchWebPasswordsForUrlHttpGetIn">
-    <wsdl:part name="token" type="s:string" />
-    <wsdl:part name="url" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="SearchWebPasswordsForUrlHttpGetOut">
-    <wsdl:part name="Body" element="tns:GetWebPasswordResult" />
   </wsdl:message>
   <wsdl:message name="GetSecretsByFieldValueHttpGetIn">
     <wsdl:part name="token" type="s:string" />
@@ -1745,6 +1914,21 @@
   <wsdl:message name="GetSecretAuditHttpGetOut">
     <wsdl:part name="Body" element="tns:GetSecretAuditResult" />
   </wsdl:message>
+  <wsdl:message name="RemoveDependencyHttpGetIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="dependencyId" type="s:string" />
+    <wsdl:part name="secretId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RemoveDependencyHttpGetOut">
+    <wsdl:part name="Body" element="tns:WebServiceResult" />
+  </wsdl:message>
+  <wsdl:message name="GetDependenciesHttpGetIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="secretId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDependenciesHttpGetOut">
+    <wsdl:part name="Body" element="tns:GetDependenciesResult" />
+  </wsdl:message>
   <wsdl:message name="GetAgentsHttpGetIn">
     <wsdl:part name="token" type="s:string" />
   </wsdl:message>
@@ -1777,6 +1961,35 @@
   </wsdl:message>
   <wsdl:message name="WhoAmIHttpGetOut">
     <wsdl:part name="Body" element="tns:UserInfoResult" />
+  </wsdl:message>
+  <wsdl:message name="GetAllGroupsHttpGetIn">
+    <wsdl:part name="token" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAllGroupsHttpGetOut">
+    <wsdl:part name="Body" element="tns:GetAllGroupsResult" />
+  </wsdl:message>
+  <wsdl:message name="AssignUserToGroupHttpGetIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="userId" type="s:string" />
+    <wsdl:part name="groupId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AssignUserToGroupHttpGetOut">
+    <wsdl:part name="Body" element="tns:WebServiceResult" />
+  </wsdl:message>
+  <wsdl:message name="GetSSHLoginCredentialsHttpGetIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="secretId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetSSHLoginCredentialsHttpGetOut">
+    <wsdl:part name="Body" element="tns:SSHCredentialsResult" />
+  </wsdl:message>
+  <wsdl:message name="GetSSHLoginCredentialsWithMachineHttpGetIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="secretId" type="s:string" />
+    <wsdl:part name="machine" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetSSHLoginCredentialsWithMachineHttpGetOut">
+    <wsdl:part name="Body" element="tns:SSHCredentialsResult" />
   </wsdl:message>
   <wsdl:message name="ApproveSecretAccessRequestHttpPostIn">
     <wsdl:part name="approvalId" type="s:string" />
@@ -1839,13 +2052,6 @@
   </wsdl:message>
   <wsdl:message name="ChangePasswordHttpPostOut">
     <wsdl:part name="Body" element="tns:WebServiceResult" />
-  </wsdl:message>
-  <wsdl:message name="SearchWebPasswordsForUrlHttpPostIn">
-    <wsdl:part name="token" type="s:string" />
-    <wsdl:part name="url" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="SearchWebPasswordsForUrlHttpPostOut">
-    <wsdl:part name="Body" element="tns:GetWebPasswordResult" />
   </wsdl:message>
   <wsdl:message name="GetSecretsByFieldValueHttpPostIn">
     <wsdl:part name="token" type="s:string" />
@@ -2023,6 +2229,21 @@
   <wsdl:message name="GetSecretAuditHttpPostOut">
     <wsdl:part name="Body" element="tns:GetSecretAuditResult" />
   </wsdl:message>
+  <wsdl:message name="RemoveDependencyHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="dependencyId" type="s:string" />
+    <wsdl:part name="secretId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RemoveDependencyHttpPostOut">
+    <wsdl:part name="Body" element="tns:WebServiceResult" />
+  </wsdl:message>
+  <wsdl:message name="GetDependenciesHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="secretId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDependenciesHttpPostOut">
+    <wsdl:part name="Body" element="tns:GetDependenciesResult" />
+  </wsdl:message>
   <wsdl:message name="GetAgentsHttpPostIn">
     <wsdl:part name="token" type="s:string" />
   </wsdl:message>
@@ -2055,6 +2276,35 @@
   </wsdl:message>
   <wsdl:message name="WhoAmIHttpPostOut">
     <wsdl:part name="Body" element="tns:UserInfoResult" />
+  </wsdl:message>
+  <wsdl:message name="GetAllGroupsHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAllGroupsHttpPostOut">
+    <wsdl:part name="Body" element="tns:GetAllGroupsResult" />
+  </wsdl:message>
+  <wsdl:message name="AssignUserToGroupHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="userId" type="s:string" />
+    <wsdl:part name="groupId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AssignUserToGroupHttpPostOut">
+    <wsdl:part name="Body" element="tns:WebServiceResult" />
+  </wsdl:message>
+  <wsdl:message name="GetSSHLoginCredentialsHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="secretId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetSSHLoginCredentialsHttpPostOut">
+    <wsdl:part name="Body" element="tns:SSHCredentialsResult" />
+  </wsdl:message>
+  <wsdl:message name="GetSSHLoginCredentialsWithMachineHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="secretId" type="s:string" />
+    <wsdl:part name="machine" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetSSHLoginCredentialsWithMachineHttpPostOut">
+    <wsdl:part name="Body" element="tns:SSHCredentialsResult" />
   </wsdl:message>
   <wsdl:portType name="SSWebServiceSoap">
     <wsdl:operation name="ApproveSecretAccessRequest">
@@ -2092,10 +2342,6 @@
     <wsdl:operation name="ChangePassword">
       <wsdl:input message="tns:ChangePasswordSoapIn" />
       <wsdl:output message="tns:ChangePasswordSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="SearchWebPasswordsForUrl">
-      <wsdl:input message="tns:SearchWebPasswordsForUrlSoapIn" />
-      <wsdl:output message="tns:SearchWebPasswordsForUrlSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="GetSecretsByFieldValue">
       <wsdl:input message="tns:GetSecretsByFieldValueSoapIn" />
@@ -2221,6 +2467,18 @@
       <wsdl:input message="tns:GetSecretAuditSoapIn" />
       <wsdl:output message="tns:GetSecretAuditSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="AddDependency">
+      <wsdl:input message="tns:AddDependencySoapIn" />
+      <wsdl:output message="tns:AddDependencySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveDependency">
+      <wsdl:input message="tns:RemoveDependencySoapIn" />
+      <wsdl:output message="tns:RemoveDependencySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDependencies">
+      <wsdl:input message="tns:GetDependenciesSoapIn" />
+      <wsdl:output message="tns:GetDependenciesSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="GetAgents">
       <wsdl:input message="tns:GetAgentsSoapIn" />
       <wsdl:output message="tns:GetAgentsSoapOut" />
@@ -2248,6 +2506,22 @@
     <wsdl:operation name="WhoAmI">
       <wsdl:input message="tns:WhoAmISoapIn" />
       <wsdl:output message="tns:WhoAmISoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllGroups">
+      <wsdl:input message="tns:GetAllGroupsSoapIn" />
+      <wsdl:output message="tns:GetAllGroupsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AssignUserToGroup">
+      <wsdl:input message="tns:AssignUserToGroupSoapIn" />
+      <wsdl:output message="tns:AssignUserToGroupSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSSHLoginCredentials">
+      <wsdl:input message="tns:GetSSHLoginCredentialsSoapIn" />
+      <wsdl:output message="tns:GetSSHLoginCredentialsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSSHLoginCredentialsWithMachine">
+      <wsdl:input message="tns:GetSSHLoginCredentialsWithMachineSoapIn" />
+      <wsdl:output message="tns:GetSSHLoginCredentialsWithMachineSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="SSWebServiceHttpGet">
@@ -2282,10 +2556,6 @@
     <wsdl:operation name="ChangePassword">
       <wsdl:input message="tns:ChangePasswordHttpGetIn" />
       <wsdl:output message="tns:ChangePasswordHttpGetOut" />
-    </wsdl:operation>
-    <wsdl:operation name="SearchWebPasswordsForUrl">
-      <wsdl:input message="tns:SearchWebPasswordsForUrlHttpGetIn" />
-      <wsdl:output message="tns:SearchWebPasswordsForUrlHttpGetOut" />
     </wsdl:operation>
     <wsdl:operation name="GetSecretsByFieldValue">
       <wsdl:input message="tns:GetSecretsByFieldValueHttpGetIn" />
@@ -2379,6 +2649,14 @@
       <wsdl:input message="tns:GetSecretAuditHttpGetIn" />
       <wsdl:output message="tns:GetSecretAuditHttpGetOut" />
     </wsdl:operation>
+    <wsdl:operation name="RemoveDependency">
+      <wsdl:input message="tns:RemoveDependencyHttpGetIn" />
+      <wsdl:output message="tns:RemoveDependencyHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDependencies">
+      <wsdl:input message="tns:GetDependenciesHttpGetIn" />
+      <wsdl:output message="tns:GetDependenciesHttpGetOut" />
+    </wsdl:operation>
     <wsdl:operation name="GetAgents">
       <wsdl:input message="tns:GetAgentsHttpGetIn" />
       <wsdl:output message="tns:GetAgentsHttpGetOut" />
@@ -2398,6 +2676,22 @@
     <wsdl:operation name="WhoAmI">
       <wsdl:input message="tns:WhoAmIHttpGetIn" />
       <wsdl:output message="tns:WhoAmIHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllGroups">
+      <wsdl:input message="tns:GetAllGroupsHttpGetIn" />
+      <wsdl:output message="tns:GetAllGroupsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AssignUserToGroup">
+      <wsdl:input message="tns:AssignUserToGroupHttpGetIn" />
+      <wsdl:output message="tns:AssignUserToGroupHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSSHLoginCredentials">
+      <wsdl:input message="tns:GetSSHLoginCredentialsHttpGetIn" />
+      <wsdl:output message="tns:GetSSHLoginCredentialsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSSHLoginCredentialsWithMachine">
+      <wsdl:input message="tns:GetSSHLoginCredentialsWithMachineHttpGetIn" />
+      <wsdl:output message="tns:GetSSHLoginCredentialsWithMachineHttpGetOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="SSWebServiceHttpPost">
@@ -2432,10 +2726,6 @@
     <wsdl:operation name="ChangePassword">
       <wsdl:input message="tns:ChangePasswordHttpPostIn" />
       <wsdl:output message="tns:ChangePasswordHttpPostOut" />
-    </wsdl:operation>
-    <wsdl:operation name="SearchWebPasswordsForUrl">
-      <wsdl:input message="tns:SearchWebPasswordsForUrlHttpPostIn" />
-      <wsdl:output message="tns:SearchWebPasswordsForUrlHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="GetSecretsByFieldValue">
       <wsdl:input message="tns:GetSecretsByFieldValueHttpPostIn" />
@@ -2529,6 +2819,14 @@
       <wsdl:input message="tns:GetSecretAuditHttpPostIn" />
       <wsdl:output message="tns:GetSecretAuditHttpPostOut" />
     </wsdl:operation>
+    <wsdl:operation name="RemoveDependency">
+      <wsdl:input message="tns:RemoveDependencyHttpPostIn" />
+      <wsdl:output message="tns:RemoveDependencyHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDependencies">
+      <wsdl:input message="tns:GetDependenciesHttpPostIn" />
+      <wsdl:output message="tns:GetDependenciesHttpPostOut" />
+    </wsdl:operation>
     <wsdl:operation name="GetAgents">
       <wsdl:input message="tns:GetAgentsHttpPostIn" />
       <wsdl:output message="tns:GetAgentsHttpPostOut" />
@@ -2548,6 +2846,22 @@
     <wsdl:operation name="WhoAmI">
       <wsdl:input message="tns:WhoAmIHttpPostIn" />
       <wsdl:output message="tns:WhoAmIHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllGroups">
+      <wsdl:input message="tns:GetAllGroupsHttpPostIn" />
+      <wsdl:output message="tns:GetAllGroupsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AssignUserToGroup">
+      <wsdl:input message="tns:AssignUserToGroupHttpPostIn" />
+      <wsdl:output message="tns:AssignUserToGroupHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSSHLoginCredentials">
+      <wsdl:input message="tns:GetSSHLoginCredentialsHttpPostIn" />
+      <wsdl:output message="tns:GetSSHLoginCredentialsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSSHLoginCredentialsWithMachine">
+      <wsdl:input message="tns:GetSSHLoginCredentialsWithMachineHttpPostIn" />
+      <wsdl:output message="tns:GetSSHLoginCredentialsWithMachineHttpPostOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="SSWebServiceSoap" type="tns:SSWebServiceSoap">
@@ -2626,15 +2940,6 @@
     </wsdl:operation>
     <wsdl:operation name="ChangePassword">
       <soap:operation soapAction="urn:thesecretserver.com/ChangePassword" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="SearchWebPasswordsForUrl">
-      <soap:operation soapAction="urn:thesecretserver.com/SearchWebPasswordsForUrl" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -2921,6 +3226,33 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="AddDependency">
+      <soap:operation soapAction="urn:thesecretserver.com/AddDependency" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveDependency">
+      <soap:operation soapAction="urn:thesecretserver.com/RemoveDependency" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDependencies">
+      <soap:operation soapAction="urn:thesecretserver.com/GetDependencies" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetAgents">
       <soap:operation soapAction="urn:thesecretserver.com/GetAgents" style="document" />
       <wsdl:input>
@@ -2977,6 +3309,42 @@
     </wsdl:operation>
     <wsdl:operation name="WhoAmI">
       <soap:operation soapAction="urn:thesecretserver.com/WhoAmI" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllGroups">
+      <soap:operation soapAction="urn:thesecretserver.com/GetAllGroups" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AssignUserToGroup">
+      <soap:operation soapAction="urn:thesecretserver.com/AssignUserToGroup" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSSHLoginCredentials">
+      <soap:operation soapAction="urn:thesecretserver.com/GetSSHLoginCredentials" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSSHLoginCredentialsWithMachine">
+      <soap:operation soapAction="urn:thesecretserver.com/GetSSHLoginCredentialsWithMachine" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -3061,15 +3429,6 @@
     </wsdl:operation>
     <wsdl:operation name="ChangePassword">
       <soap12:operation soapAction="urn:thesecretserver.com/ChangePassword" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="SearchWebPasswordsForUrl">
-      <soap12:operation soapAction="urn:thesecretserver.com/SearchWebPasswordsForUrl" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -3356,6 +3715,33 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="AddDependency">
+      <soap12:operation soapAction="urn:thesecretserver.com/AddDependency" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveDependency">
+      <soap12:operation soapAction="urn:thesecretserver.com/RemoveDependency" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDependencies">
+      <soap12:operation soapAction="urn:thesecretserver.com/GetDependencies" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetAgents">
       <soap12:operation soapAction="urn:thesecretserver.com/GetAgents" style="document" />
       <wsdl:input>
@@ -3412,6 +3798,42 @@
     </wsdl:operation>
     <wsdl:operation name="WhoAmI">
       <soap12:operation soapAction="urn:thesecretserver.com/WhoAmI" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllGroups">
+      <soap12:operation soapAction="urn:thesecretserver.com/GetAllGroups" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AssignUserToGroup">
+      <soap12:operation soapAction="urn:thesecretserver.com/AssignUserToGroup" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSSHLoginCredentials">
+      <soap12:operation soapAction="urn:thesecretserver.com/GetSSHLoginCredentials" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSSHLoginCredentialsWithMachine">
+      <soap12:operation soapAction="urn:thesecretserver.com/GetSSHLoginCredentialsWithMachine" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -3494,15 +3916,6 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="SearchWebPasswordsForUrl">
-      <http:operation location="/SearchWebPasswordsForUrl" />
-      <wsdl:input>
-        <http:urlEncoded />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="GetSecretsByFieldValue">
       <http:operation location="/GetSecretsByFieldValue" />
       <wsdl:input>
@@ -3710,6 +4123,24 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="RemoveDependency">
+      <http:operation location="/RemoveDependency" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDependencies">
+      <http:operation location="/GetDependencies" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetAgents">
       <http:operation location="/GetAgents" />
       <wsdl:input>
@@ -3748,6 +4179,42 @@
     </wsdl:operation>
     <wsdl:operation name="WhoAmI">
       <http:operation location="/WhoAmI" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllGroups">
+      <http:operation location="/GetAllGroups" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AssignUserToGroup">
+      <http:operation location="/AssignUserToGroup" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSSHLoginCredentials">
+      <http:operation location="/GetSSHLoginCredentials" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSSHLoginCredentialsWithMachine">
+      <http:operation location="/GetSSHLoginCredentialsWithMachine" />
       <wsdl:input>
         <http:urlEncoded />
       </wsdl:input>
@@ -3830,15 +4297,6 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="SearchWebPasswordsForUrl">
-      <http:operation location="/SearchWebPasswordsForUrl" />
-      <wsdl:input>
-        <mime:content type="application/x-www-form-urlencoded" />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="GetSecretsByFieldValue">
       <http:operation location="/GetSecretsByFieldValue" />
       <wsdl:input>
@@ -4046,6 +4504,24 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="RemoveDependency">
+      <http:operation location="/RemoveDependency" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDependencies">
+      <http:operation location="/GetDependencies" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetAgents">
       <http:operation location="/GetAgents" />
       <wsdl:input>
@@ -4084,6 +4560,42 @@
     </wsdl:operation>
     <wsdl:operation name="WhoAmI">
       <http:operation location="/WhoAmI" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllGroups">
+      <http:operation location="/GetAllGroups" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AssignUserToGroup">
+      <http:operation location="/AssignUserToGroup" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSSHLoginCredentials">
+      <http:operation location="/GetSSHLoginCredentials" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSSHLoginCredentialsWithMachine">
+      <http:operation location="/GetSSHLoginCredentialsWithMachine" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>

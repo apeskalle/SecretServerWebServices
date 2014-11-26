@@ -77,7 +77,13 @@
     <None Include="Service References\SSWebService\SampleWebServiceConsoleApplication.SSWebService.GetAgentsResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\SSWebService\SampleWebServiceConsoleApplication.SSWebService.GetAllGroupsResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\SSWebService\SampleWebServiceConsoleApplication.SSWebService.GetCheckOutStatusResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SSWebService\SampleWebServiceConsoleApplication.SSWebService.GetDependenciesResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\SSWebService\SampleWebServiceConsoleApplication.SSWebService.GetFavoritesResult.datasource">
@@ -104,9 +110,6 @@
     <None Include="Service References\SSWebService\SampleWebServiceConsoleApplication.SSWebService.GetSecretTemplatesResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\SSWebService\SampleWebServiceConsoleApplication.SSWebService.GetWebPasswordResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Service References\SSWebService\SampleWebServiceConsoleApplication.SSWebService.RequestApprovalResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -114,6 +117,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\SSWebService\SampleWebServiceConsoleApplication.SSWebService.SearchSecretsResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SSWebService\SampleWebServiceConsoleApplication.SSWebService.SSHCredentialsResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\SSWebService\SampleWebServiceConsoleApplication.SSWebService.TokenIsValidResult.datasource">
