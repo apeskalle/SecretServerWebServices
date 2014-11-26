@@ -17,9 +17,17 @@ namespace SampleWebServiceConsoleApplication
 
 		static void Main()
 		{
-			var account = ReadAccount();
+            /*
+             * Uncomment the next line of code to test against Secret Server using a self-signed certificate, if the following
+             * error appears: "Could not establish trust relationship for the SSL/TLS secure channel with authority 'localhost'.".
+             * 
+             * NOTE: This is not recommend for production. Instead, configure IIS on the Secret Server server to use a valid, trusted certificate.
+             */
+            // System.Net.ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, errors) => true;
+
+            var account = ReadAccount();
             //var account = new Account() { Domain = "myDomain", Password = "myPassword", Url = "http://localhost/SecretServer/webservices/SSWebservice.asmx", UserName = "myUsername" };            
-			var client = GetClient(account);
+            var client = GetClient(account);
 			var authenticateResult = client.Authenticate(account.UserName, account.Password, string.Empty, account.Domain);
 			if (authenticateResult.Errors.Length > 0)
 			{
@@ -309,10 +317,17 @@ namespace SampleWebServiceConsoleApplication
 		/// </summary>
 		private static SSWebServiceSoapClient GetClient(Account account)
 		{
-			var binding = new BasicHttpBinding();
+		    BasicHttpSecurityMode mode = BasicHttpSecurityMode.None;
+		    if (account.Url.ToLower().StartsWith("https://"))
+		    {
+                mode = BasicHttpSecurityMode.Transport;
+            }
+
+            var binding = new BasicHttpBinding(mode);
+		    
 			//Create an endpoint for the URI.
 			var endpoint = new EndpointAddress(account.Url);
-			var client = new SSWebServiceSoapClient(binding, endpoint);
+		    var client = new SSWebServiceSoapClient(binding, endpoint);
 			return client;
 		}
 
